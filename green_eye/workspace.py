@@ -43,6 +43,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.tabWidget)
         self.graphicsView = QtWidgets.QGraphicsView(self.centralwidget)
         self.graphicsView.setObjectName("graphicsView")
+        self.scene = QtWidgets.QGraphicsScene(0, 0, 1024, 768)
+        self.graphicsView.setScene(self.scene)
         self.horizontalLayout.addWidget(self.graphicsView)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)

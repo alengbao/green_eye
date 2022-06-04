@@ -6,13 +6,21 @@ from typing import Tuple
 
 class Node:
     cnt = 0
+    dic = {}
 
-    def __init__(self):
+    def __init__(self, code='', node_id=None):
+        if node_id is None:
+            self.id = Node.cnt
+            Node.cnt += 1
+        else:
+            self.id = node_id
+        Node.dic[self.id] = self
+
         self.inputs = ()
         self.outputs = ()
         self.connected_to = []
         self.next = []
-        self.code = ''
+        self.code = code
         self.name = 'default'
 
         self.call_func = None
@@ -22,6 +30,10 @@ class Node:
         self.problem = False
         self.problem_desc = ''
         self.proc_result = None
+        self.reload()
+
+    def reload(self):
+        self.new_code(self.code)
 
     def draw(self, x=None, y=None):
         pass
@@ -51,10 +63,10 @@ class Node:
             signature = inspect.signature(self.call_func)
             inputs = tuple(map(lambda x: x.name, signature.parameters.values()))
 
-            if tuple in signature.return_annotation.mro():
+            if signature.return_annotation is not inspect.Signature.empty:
                 out = []
                 i = 0
-                for arg in list(signature.return_annotation.__args__):
+                for arg in list(signature.return_annotation):
                     is_string = isinstance(arg, typing.ForwardRef) and isinstance(arg.__forward_arg__, str)
                     out.append(arg.__forward_arg__ if is_string else 'result ' + str(i))
                     i += 1

@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+import inspect
 import json
 
 import PyQt5.QtCore as QtCore
@@ -8,6 +9,7 @@ import PyQt5.QtWidgets as QtWidgets
 import core
 import workspace
 from core import node
+
 
 if __name__ == '__main__':
     import sys
