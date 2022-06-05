@@ -9,6 +9,10 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QPainter
+from PyQt5.QtWidgets import QGraphicsView
+
+from core.node_view import NodeView
 
 
 class Ui_MainWindow(object):
@@ -43,8 +47,16 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.tabWidget)
         self.graphicsView = QtWidgets.QGraphicsView(self.centralwidget)
         self.graphicsView.setObjectName("graphicsView")
-        self.scene = QtWidgets.QGraphicsScene(0, 0, 1024, 768)
-        self.graphicsView.setScene(self.scene)
+        self.graphicsView.scene = QtWidgets.QGraphicsScene(0, 0, 1024, 1024)
+        self.graphicsView.setRenderHint(QPainter.Antialiasing)
+        self.graphicsView.setScene(self.graphicsView.scene)
+        p = NodeView(100, 200, '''
+def 名字(a):
+    return 1
+
+call = 名字
+        ''')
+        self.graphicsView.scene.addItem(p)
         self.horizontalLayout.addWidget(self.graphicsView)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)

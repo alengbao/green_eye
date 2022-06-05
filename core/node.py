@@ -98,7 +98,8 @@ class Node:
         gen_inputs = {}
         for connection in connected_to:
             try:
-                inputs = connection['output']['node'].processor()
+                n = Node.dic[connection['output']['id']]
+                inputs = n.processor()
                 data = inputs[connection['output']['name']]
             except:
                 self.problem = True
@@ -129,7 +130,7 @@ class Node:
     def add_connected(self, node, put):
         self.connected_to.append({
             'output': {
-                'node': node,
+                'id': node.id,
                 'name': node.outputs[0]
             },
             'input': {
