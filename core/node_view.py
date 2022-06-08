@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QGraphicsItem, QWidget, QStyleOptionGraphicsItem, \
 
 from core.point import Point
 from core.node import Node
+from core.line import Line
 
 
 class NodeView(Node, QGraphicsItem):
@@ -15,20 +16,20 @@ class NodeView(Node, QGraphicsItem):
         Node.__init__(self, code, node_id)
         QGraphicsItem.__init__(self)
         self.setPos(x, y)
-        self.length = 200
-        self.height = 150
+        self.length = 210
+        self.height = max(35+len(self.inputs)*30, 35+len(self.outputs)*30)
         self.input_points = []
         self.output_points = []
         self.setFlag(QGraphicsItem.ItemIsMovable)
 
         for i in self.inputs:
-            p = Point(i, self)
-            p.setPos(10, self.inputs.index(i)*30+30)
+            p = Point(i, 'input', self)
+            p.setPos(10, self.inputs.index(i)*30+35)
             self.input_points.append(p)
 
         for i in self.outputs:
-            p = Point(i, self)
-            p.setPos(100, self.outputs.index(i)*30+30)
+            p = Point(i, 'output', self)
+            p.setPos(120, self.outputs.index(i)*30+35)
             self.output_points.append(p)
 
     def boundingRect(self) -> QtCore.QRectF:
@@ -36,7 +37,11 @@ class NodeView(Node, QGraphicsItem):
 
     def paint(self, painter: QtGui.QPainter, option: QStyleOptionGraphicsItem,
               widget: typing.Optional[QWidget] = ...) -> None:
-        painter.setBrush(QtGui.QColor(123, 0, 124))
-        painter.drawRect(0, 0, self.length, self.height)
+        first_line_height = 25
+        painter.setBrush(QtGui.QColor(187, 255, 255))
+        painter.drawRect(0, 0, self.length, first_line_height)
+        painter.setBrush(QtGui.QColor(255, 235, 205))
+        painter.drawRect(0, first_line_height, self.length, self.height-first_line_height)
         painter.setPen(QtGui.QColor(0, 0, 0))
-        painter.drawText(10, 20, self.name)
+        painter.drawText(15, 20, self.name)
+

@@ -35,9 +35,6 @@ class Node:
     def reload(self):
         self.new_code(self.code)
 
-    def draw(self, x=None, y=None):
-        pass
-
     def new_code(self, code):
         # self.cleanup()
         self.code = code

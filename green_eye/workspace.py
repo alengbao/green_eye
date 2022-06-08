@@ -13,6 +13,7 @@ from PyQt5.QtGui import QPainter
 from PyQt5.QtWidgets import QGraphicsView
 
 from core.node_view import NodeView
+from core.line import Line
 
 
 class Ui_MainWindow(object):
@@ -39,10 +40,10 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabPosition(QtWidgets.QTabWidget.West)
         self.tabWidget.setObjectName("tabWidget")
         self.tab = QtWidgets.QWidget()
-        self.tab.setObjectName("tab")
+        self.tab.setObjectName("normal")
         self.tabWidget.addTab(self.tab, "")
         self.tab_2 = QtWidgets.QWidget()
-        self.tab_2.setObjectName("tab_2")
+        self.tab_2.setObjectName("graph")
         self.tabWidget.addTab(self.tab_2, "")
         self.horizontalLayout.addWidget(self.tabWidget)
         self.graphicsView = QtWidgets.QGraphicsView(self.centralwidget)
@@ -51,7 +52,7 @@ class Ui_MainWindow(object):
         self.graphicsView.setRenderHint(QPainter.Antialiasing)
         self.graphicsView.setScene(self.graphicsView.scene)
         p = NodeView(100, 200, '''
-def 名字(a):
+def 名字(f, a, b):
     return 1
 
 call = 名字
