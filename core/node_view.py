@@ -29,7 +29,7 @@ class NodeView(Node, QGraphicsItem):
 
         for i in self.outputs:
             p = Point(i, 'output', self)
-            p.setPos(120, self.outputs.index(i)*30+35)
+            p.setPos(190, self.outputs.index(i)*30+35)
             self.output_points.append(p)
 
     def boundingRect(self) -> QtCore.QRectF:

@@ -54,12 +54,19 @@ class Ui_MainWindow(object):
         self.graphicsView.setRenderHint(QPainter.Antialiasing)
         self.graphicsView.setScene(self.graphicsView.scene)
         p = NodeView(100, 200, '''
-def 名字(f, a, b):
-    return 1
+def 开始():
+    return 123
 
-call = 名字
+call = 开始
         ''')
         self.graphicsView.scene.addItem(p)
+        p1 = NodeView(250, 220, '''
+def 结束(x, y=7):
+    print(x+y)
+
+call = 结束
+        ''')
+        self.graphicsView.scene.addItem(p1)
         ls = Lines(1024, 1024)
         self.graphicsView.scene.add_lines(ls)
         self.horizontalLayout.addWidget(self.graphicsView)

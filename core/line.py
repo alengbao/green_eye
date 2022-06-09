@@ -5,6 +5,8 @@ import typing
 
 
 class Line:
+    node_dic = {}
+
     def __init__(self, stx, sty, edx, edy):
         super().__init__()
         self.stx = stx

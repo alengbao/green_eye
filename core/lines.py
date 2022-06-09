@@ -26,8 +26,8 @@ class Lines(QGraphicsItem):
         path = QPainterPath()
         for line in self.lines:
             path.moveTo(line.stx, line.sty)
-            path.cubicTo(line.stx - (line.stx - line.edx) / 6, line.sty + (line.sty + line.edy) / 6,
-                         line.edx + (line.stx - line.edx) / 6, line.edy - (line.sty + line.edy) / 6,
+            path.cubicTo(line.stx - (line.stx - line.edx) / 5, line.sty + (line.sty + line.edy) / 7,
+                         line.edx + (line.stx - line.edx) / 5, line.edy - (line.sty + line.edy) / 7,
                          line.edx, line.edy)
             painter.drawPath(path)
 

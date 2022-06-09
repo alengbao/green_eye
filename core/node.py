@@ -19,7 +19,7 @@ class Node:
         self.inputs = ()
         self.outputs = ()
         self.connected_to = []
-        self.next = []
+        self.nexts = []
         self.code = code
         self.name = 'default'
 
@@ -86,10 +86,10 @@ class Node:
                 self.problem_desc = "Cleanup error: " + str(ex)
             self.problem = True
 
-    def processor(self):
+    def processor(self, rerun=False):
         connected_to = self.connected_to
         outputs = self.outputs
-        if self.proc_result:
+        if self.proc_result is not None and not rerun:
             return self.proc_result
 
         gen_inputs = {}
@@ -122,15 +122,19 @@ class Node:
             self.proc_result = get_outputs
             self.problem = False
 
+        for n in self.nexts:
+            Node.dic[n].processor(True)
+
         return self.proc_result
 
-    def add_connected(self, node, put):
+    def add_connected(self, n, input_name, output_name):
         self.connected_to.append({
             'output': {
-                'id': node.id,
-                'name': node.outputs[0]
+                'id': n.id,
+                'name': output_name
             },
             'input': {
-                'name': put
+                'name': input_name
             }
         })
+        n.nexts.append(self.id)
