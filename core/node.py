@@ -14,6 +14,8 @@ class Node:
             Node.cnt += 1
         else:
             self.id = node_id
+            if Node.cnt <= node_id:
+                Node.cnt = node_id+1
         Node.dic[self.id] = self
 
         self.inputs = ()

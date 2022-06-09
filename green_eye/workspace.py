@@ -84,16 +84,10 @@ class Ui_MainWindow(object):
         self.graphicsView.scene.addItem(self.canvas)
         NodeView(100, 200, '''
 def 开始():
-    return 123
+    ...
 
 call = 开始
-        ''', self.canvas)
-        NodeView(250, 220, '''
-def 结束(x, y=7):
-    print(x+y)
-
-call = 结束
-        ''', self.canvas)
+        ''', self.canvas, 0)
         self.ls = Lines(self.length, self.height)
         self.graphicsView.scene.add_lines(self.ls)
         self.horizontalLayout.addWidget(self.graphicsView)
