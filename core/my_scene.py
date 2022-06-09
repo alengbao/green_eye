@@ -1,6 +1,5 @@
 from PyQt5 import QtWidgets, QtGui
-from PyQt5.QtCore import QEvent, Qt
-from PyQt5.QtGui import QKeySequence
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QGraphicsSceneDragDropEvent
 
 from core.line import Line

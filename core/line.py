@@ -1,9 +1,3 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QPainterPath
-from PyQt5.QtWidgets import QWidget, QStyleOptionGraphicsItem
-import typing
-
-
 class Line:
     node_dic = {}
 

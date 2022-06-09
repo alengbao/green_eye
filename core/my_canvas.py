@@ -1,9 +1,8 @@
 import typing
 
 from PyQt5 import QtCore, QtGui
-from PyQt5.QtWidgets import QGraphicsItem
 from PyQt5.QtWidgets import QGraphicsItem, QWidget, QStyleOptionGraphicsItem, \
-    QGraphicsSceneDragDropEvent, QGraphicsSceneMouseEvent
+    QGraphicsSceneDragDropEvent
 
 from core.node_view import NodeView
 

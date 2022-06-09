@@ -1,12 +1,11 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QPointF
-from PyQt5.QtGui import QPainter, QTransform
-from PyQt5.QtWidgets import QWidget, QStyleOptionGraphicsItem, \
-    QGraphicsSceneMouseEvent, QGraphicsView
 import typing
 
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import QPointF
+from PyQt5.QtWidgets import QWidget, QStyleOptionGraphicsItem, \
+    QGraphicsSceneMouseEvent
+
 from core.line import Line
-from core.node import Node
 
 
 def get_point(pos: QPointF, scene: QtWidgets.QGraphicsScene):
@@ -62,7 +61,6 @@ class Point(QtWidgets.QGraphicsItem):
         self.scene().update()
 
     def mouseMoveEvent(self, event: 'QGraphicsSceneMouseEvent') -> None:
-        print(event.scenePos().x(), event.scenePos().y())
         if self.point_type == 'input':
             self.tem_line.set_st(event.scenePos().x(), event.scenePos().y())
         else:

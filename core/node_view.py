@@ -1,13 +1,10 @@
 import typing
 
-from PyQt5 import QtWidgets, QtCore, QtGui
-from PyQt5.QtWidgets import QGraphicsItem, QWidget, QStyleOptionGraphicsItem, \
-    QGraphicsSceneDragDropEvent, QGraphicsSceneMouseEvent
+from PyQt5 import QtCore, QtGui
+from PyQt5.QtWidgets import QGraphicsItem, QWidget, QStyleOptionGraphicsItem
 
-
-from core.point import Point
 from core.node import Node
-from core.line import Line
+from core.point import Point
 
 
 class NodeView(Node, QGraphicsItem):
@@ -21,6 +18,7 @@ class NodeView(Node, QGraphicsItem):
         self.input_points = []
         self.output_points = []
         self.setFlag(QGraphicsItem.ItemIsMovable)
+        self.setFlag(QGraphicsItem.ItemIsSelectable)
 
         for i in self.inputs:
             p = Point(i, 'input', self)
