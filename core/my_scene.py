@@ -1,6 +1,7 @@
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtCore import QEvent, Qt
 from PyQt5.QtGui import QKeySequence
+from PyQt5.QtWidgets import QGraphicsSceneDragDropEvent
 
 from core.line import Line
 from core.lines import Lines
@@ -25,3 +26,10 @@ class MyScene(QtWidgets.QGraphicsScene):
     def keyPressEvent(self, event: QtGui.QKeyEvent) -> None:
         if event.key() == Qt.Key_R:
             Node.dic[0].processor(True)
+
+    def dragEnterEvent(self, event: QGraphicsSceneDragDropEvent) -> None:
+        event.accept()
+        # if event.mimeData().hasFormat('text/plain'):
+        #     event.accept()
+        # else:
+        #     event.ignore()

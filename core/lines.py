@@ -1,3 +1,4 @@
+import json
 import typing
 
 from PyQt5 import QtWidgets, QtCore, QtGui
@@ -17,6 +18,7 @@ class Lines(QGraphicsItem):
         self.lines = []
         self.x = x
         self.y = y
+        self.setPos(0, 0)
 
     def boundingRect(self) -> QtCore.QRectF:
         return QtCore.QRectF(0, 0, self.x, self.y)
@@ -26,8 +28,8 @@ class Lines(QGraphicsItem):
         path = QPainterPath()
         for line in self.lines:
             path.moveTo(line.stx, line.sty)
-            path.cubicTo(line.stx - (line.stx - line.edx) / 5, line.sty + (line.sty + line.edy) / 7,
-                         line.edx + (line.stx - line.edx) / 5, line.edy - (line.sty + line.edy) / 7,
+            path.cubicTo(line.stx - (line.stx - line.edx) / 5, line.sty + (line.sty - line.edy) / 6,
+                         line.edx + (line.stx - line.edx) / 5, line.edy - (line.sty - line.edy) / 6,
                          line.edx, line.edy)
             painter.drawPath(path)
 

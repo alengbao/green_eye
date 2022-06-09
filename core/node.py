@@ -19,7 +19,7 @@ class Node:
         self.inputs = ()
         self.outputs = ()
         self.connected_to = []
-        self.nexts = []
+        self.nexts = {}
         self.code = code
         self.name = 'default'
 
@@ -122,8 +122,8 @@ class Node:
             self.proc_result = get_outputs
             self.problem = False
 
-        for n in self.nexts:
-            Node.dic[n].processor(True)
+        for key in self.nexts.keys():
+            Node.dic[key].processor(True)
 
         return self.proc_result
 
@@ -137,4 +137,4 @@ class Node:
                 'name': input_name
             }
         })
-        n.nexts.append(self.id)
+        n.nexts[self.id] = True

@@ -12,9 +12,9 @@ from core.line import Line
 
 class NodeView(Node, QGraphicsItem):
     def __init__(self, x: int, y: int,
-                 code: str = '', node_id: int = None):
+                 code: str = '', parent=None, node_id: int = None):
         Node.__init__(self, code, node_id)
-        QGraphicsItem.__init__(self)
+        QGraphicsItem.__init__(self, parent)
         self.setPos(x, y)
         self.length = 210
         self.height = max(35+len(self.inputs)*30, 35+len(self.outputs)*30)

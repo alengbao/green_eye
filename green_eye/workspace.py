@@ -9,17 +9,24 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import QDir
 from PyQt5.QtGui import QPainter
-from PyQt5.QtWidgets import QGraphicsView
+from PyQt5.QtWidgets import QGraphicsView, QAbstractItemView, QGraphicsProxyWidget
 
 from core.lines import Lines
+from core.my_canvas import MyCanvas
+from core.my_list import MyList
 from core.my_scene import MyScene
 from core.node_view import NodeView
 from core.line import Line
+import os
+from core.code_block import CodeBlock
 
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
+        self.length = 1024
+        self.height = 1024
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(799, 600)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
@@ -36,39 +43,59 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
+
+        # tab
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
         self.tabWidget.setMinimumSize(QtCore.QSize(0, 0))
         self.tabWidget.setMaximumSize(QtCore.QSize(300, 16777215))
         self.tabWidget.setTabPosition(QtWidgets.QTabWidget.West)
         self.tabWidget.setObjectName("tabWidget")
-        self.tab = QtWidgets.QWidget()
-        self.tab.setObjectName("normal")
-        self.tabWidget.addTab(self.tab, "")
-        self.tab_2 = QtWidgets.QWidget()
-        self.tab_2.setObjectName("graph")
-        self.tabWidget.addTab(self.tab_2, "")
+
+        # tab_list
+        self.tab_list = []
+        code_path = '..\\resource\\codes'
+        qdir = QDir(code_path)
+        qdir.setFilter(QDir.Dirs)
+        for f in qdir.entryInfoList():
+            if f.fileName() != '.' and f.fileName() != '..':
+                tab = MyList()
+                tab.setDragEnabled(True)
+                tab.setDragDropMode(QAbstractItemView.DragOnly)
+                tab.setObjectName(f.fileName())
+                self.tab_list.append(tab)
+                self.tabWidget.addTab(tab, '')
+                cdir = QDir(code_path + '\\' + f.fileName())
+                cdir.setFilter(QDir.Files)
+                clist = cdir.entryInfoList()
+                for file in clist:
+                    with open(file.path() + '\\' + file.fileName(), encoding='utf-8') as code_file:
+                        block = CodeBlock(code_file.read(), file.fileName()[:-3])
+                        tab.addItem(block)
+
+
         self.horizontalLayout.addWidget(self.tabWidget)
         self.graphicsView = QtWidgets.QGraphicsView(self.centralwidget)
         self.graphicsView.setObjectName("graphicsView")
-        self.graphicsView.scene = MyScene(0, 0, 1024, 1024)
+        self.graphicsView.setAcceptDrops(True)
+        self.graphicsView.scene = MyScene(0, 0, self.length, self.height)
         self.graphicsView.setRenderHint(QPainter.Antialiasing)
         self.graphicsView.setScene(self.graphicsView.scene)
-        p = NodeView(100, 200, '''
+        self.canvas = MyCanvas(self.length, self.height)
+        self.graphicsView.scene.addItem(self.canvas)
+        NodeView(100, 200, '''
 def 开始():
     return 123
 
 call = 开始
-        ''')
-        self.graphicsView.scene.addItem(p)
-        p1 = NodeView(250, 220, '''
+        ''', self.canvas)
+        NodeView(250, 220, '''
 def 结束(x, y=7):
     print(x+y)
 
 call = 结束
-        ''')
-        self.graphicsView.scene.addItem(p1)
-        ls = Lines(1024, 1024)
-        self.graphicsView.scene.add_lines(ls)
+        ''', self.canvas)
+        self.ls = Lines(self.length, self.height)
+        self.graphicsView.scene.add_lines(self.ls)
         self.horizontalLayout.addWidget(self.graphicsView)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -85,6 +112,6 @@ call = 结束
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "normal"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "graph"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "green_eye"))
+        for t in self.tab_list:
+            self.tabWidget.setTabText(self.tabWidget.indexOf(t), _translate('MainWindow', t.objectName()))

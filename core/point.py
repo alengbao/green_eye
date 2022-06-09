@@ -72,7 +72,9 @@ class Point(QtWidgets.QGraphicsItem):
     def mouseReleaseEvent(self, event: 'QGraphicsSceneMouseEvent') -> None:
         if self.tem_line is not None:
             p = get_point(event.scenePos(), self.scene())
-            if p is None or p.parentItem() is self.parentItem() or p.point_type == self.point_type:
+            if p is None or p.parentItem() is self.parentItem() or p.point_type == self.point_type or \
+                    (p.point_type == 'input' and len(p.ed_lines) > 0) or \
+                    (self.point_type == 'input' and len(self.ed_lines) > 0):
                 self.scene().remove_line(self.tem_line)
             else:
                 if p.point_type == 'input':
