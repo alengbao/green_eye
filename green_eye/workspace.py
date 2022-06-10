@@ -46,7 +46,7 @@ class Ui_MainWindow(object):
 
         # tab
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
-        self.tabWidget.setMinimumSize(QtCore.QSize(0, 0))
+        self.tabWidget.setMinimumSize(QtCore.Size(0, 0))
         self.tabWidget.setMaximumSize(QtCore.QSize(300, 16777215))
         self.tabWidget.setTabPosition(QtWidgets.QTabWidget.West)
         self.tabWidget.setObjectName("tabWidget")
@@ -82,7 +82,7 @@ class Ui_MainWindow(object):
         self.graphicsView.setScene(self.graphicsView.scene)
         self.canvas = MyCanvas(self.length, self.height)
         self.graphicsView.scene.addItem(self.canvas)
-        NodeView(100, 200, '''
+        NodeView(300, 300, '''
 def 开始():
     ...
 

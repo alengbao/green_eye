@@ -5,7 +5,7 @@ from typing import Tuple
 
 
 class Node:
-    cnt = 0
+    cnt = 1
     dic = {}
 
     def __init__(self, code='', node_id=None):
@@ -124,8 +124,13 @@ class Node:
             self.proc_result = get_outputs
             self.problem = False
 
-        for key in self.nexts.keys():
-            Node.dic[key].processor(True)
+        if self.problem_desc:
+            print(self.problem_desc)
+        print(self.id)
+        if rerun:
+            for key in self.nexts.keys():
+                print('next', key)
+                Node.dic[key].processor(True)
 
         return self.proc_result
 
