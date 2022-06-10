@@ -3,6 +3,8 @@ import types
 import typing
 from typing import Tuple
 
+from PyQt5.QtWidgets import QMessageBox
+
 
 class Node:
     cnt = 1
@@ -67,7 +69,7 @@ class Node:
                 i = 0
                 for arg in list(signature.return_annotation):
                     is_string = isinstance(arg, typing.ForwardRef) and isinstance(arg.__forward_arg__, str)
-                    out.append(arg.__forward_arg__ if is_string else 'result ' + str(i))
+                    out.append(arg.__forward_arg__ if is_string else 'result' + str(i))
                     i += 1
                 outputs = tuple(out)
             else:
@@ -124,12 +126,11 @@ class Node:
             self.proc_result = get_outputs
             self.problem = False
 
-        if self.problem_desc:
+        if self.problem_desc and self.problem:
             print(self.problem_desc)
-        print(self.id)
+            self.pop_error()
         if rerun:
             for key in self.nexts.keys():
-                print('next', key)
                 Node.dic[key].processor(True)
 
         return self.proc_result
@@ -145,3 +146,19 @@ class Node:
             }
         })
         n.nexts[self.id] = True
+
+    def pop_error(self):
+        box = QMessageBox()
+        box.setIcon(1)
+        box.setWindowTitle("错误")
+        box.setText(self.problem_desc)
+        # 添加按钮，可用中文
+        yes = box.addButton('确定', QMessageBox.YesRole)
+        no = box.addButton('取消', QMessageBox.NoRole)
+        # 设置消息框中内容前面的图标
+        box.setIcon(1)
+        box.exec_()
+        if box.clickedButton() == yes:
+            print('确定')
+        else:
+            print('取消')

@@ -1,4 +1,4 @@
-def 加法(a, b):
+def 加法(a, b, called=None):
     return a + b
 
 

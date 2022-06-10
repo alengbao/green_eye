@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QGraphicsSceneDragDropEvent
 from core.line import Line
 from core.lines import Lines
 from core.node import Node
+from core.node_view import NodeView
 
 
 class MyScene(QtWidgets.QGraphicsScene):
@@ -25,6 +26,15 @@ class MyScene(QtWidgets.QGraphicsScene):
     def keyPressEvent(self, event: QtGui.QKeyEvent) -> None:
         if event.key() == Qt.Key_R:
             Node.dic[0].processor(True)
+        if event.key() == Qt.Key_C:
+            self.lines.lines = []
+            for i in self.items():
+                if not isinstance(i, NodeView):
+                    continue
+                if i.id == 0:
+                    i.nexts = []
+                    continue
+                self.removeItem(i)
 
     def dragEnterEvent(self, event: QGraphicsSceneDragDropEvent) -> None:
         event.accept()
