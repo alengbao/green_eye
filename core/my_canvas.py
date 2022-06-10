@@ -29,7 +29,6 @@ class MyCanvas(QGraphicsItem):
             event.ignore()
 
     def dropEvent(self, event: QGraphicsSceneDragDropEvent) -> None:
-        print('123')
         pos = event.pos()
         print('adding')
         self.add_node(event.mimeData().text(), pos.x(), pos.y())

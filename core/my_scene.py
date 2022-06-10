@@ -32,7 +32,7 @@ class MyScene(QtWidgets.QGraphicsScene):
                 if not isinstance(i, NodeView):
                     continue
                 if i.id == 0:
-                    i.nexts = []
+                    i.nexts = {}
                     continue
                 self.removeItem(i)
 

@@ -27,10 +27,8 @@ class Node:
         self.code = code
         self.name = 'default'
 
-        self.call_func = None
         self.env = {}
         self.local_scope = {}
-        self.cleanup_func = None
         self.problem = False
         self.problem_desc = ''
         self.proc_result = None
@@ -40,12 +38,10 @@ class Node:
         self.new_code(self.code)
 
     def new_code(self, code):
-        # self.cleanup()
         self.code = code
         self.problem = False
 
         self.call_func = None
-        self.cleanup_func = None
         try:
             self.env = {'S': self.local_scope}
             exec(code, self.env)
@@ -54,8 +50,6 @@ class Node:
             if not isinstance(self.call_func, types.FunctionType):
                 raise Exception('Call value is not callable!')
 
-            if 'cleanup' in self.env:
-                self.cleanup_func = self.env['cleanup']
         except Exception as ex:
             self.problem = True
         else:
@@ -81,14 +75,6 @@ class Node:
     def insert_inouts(self, data):
         self.inputs = data['inputs']
         self.outputs = data['outputs']
-
-    def cleanup(self):
-        try:
-            self.cleanup_func()
-        except Exception as ex:
-            if not self.problem:
-                self.problem_desc = "Cleanup error: " + str(ex)
-            self.problem = True
 
     def processor(self, rerun=False):
         connected_to = self.connected_to
