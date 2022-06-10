@@ -53,10 +53,11 @@ class Ui_MainWindow(object):
 
         # tab_list
         self.tab_list = []
-        code_path = '..\\resource\\codes'
+        code_path = 'D:\\Mine\\py\\src\\green_eye\\resource\\codes'
         qdir = QDir(code_path)
         qdir.setFilter(QDir.Dirs)
         for f in qdir.entryInfoList():
+            print(1)
             if f.fileName() != '.' and f.fileName() != '..':
                 tab = MyList()
                 tab.setDragEnabled(True)
