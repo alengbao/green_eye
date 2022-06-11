@@ -9,7 +9,8 @@ class MyList(QtWidgets.QListWidget):
     def __init__(self):
         super().__init__()
 
-    def startDrag(self, supportedActions: typing.Union[QtCore.Qt.DropActions, QtCore.Qt.DropAction]) -> None:
+    def startDrag(self, supportedActions: typing.Union[QtCore.Qt.DropActions, \
+                                                       QtCore.Qt.DropAction]) -> None:
         item = self.currentItem()
         mimeData = QMimeData()
         mimeData.setText(item.code)
